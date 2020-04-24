@@ -12,6 +12,7 @@ using _123.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using _123.Areas.Identity.Data;
 
 namespace _123
 {
@@ -27,10 +28,10 @@ namespace _123
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<UsersContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>(options => {
+            services.AddDefaultIdentity<TableUser>(options => {
                 options.SignIn.RequireConfirmedAccount = true;
                 options.Password.RequiredLength = 1;
                 options.Password.RequireNonAlphanumeric = false;  
@@ -40,7 +41,7 @@ namespace _123
             }
 
             )
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<UsersContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

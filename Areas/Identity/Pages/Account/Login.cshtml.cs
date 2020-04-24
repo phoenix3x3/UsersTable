@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using _123.Areas.Identity.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -17,13 +18,13 @@ namespace _123.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<TableUser> _userManager;
+        private readonly SignInManager<TableUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        public LoginModel(SignInManager<TableUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<TableUser> userManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -80,9 +81,13 @@ namespace _123.Areas.Identity.Pages.Account
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                var user = _userManager.FindByEmailAsync(Input.Email).Result;
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    user.LastLoginDateTime = DateTime.Now;
+                    await _userManager.UpdateAsync(user);
                     return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
@@ -91,6 +96,8 @@ namespace _123.Areas.Identity.Pages.Account
                 }
                 if (result.IsLockedOut)
                 {
+                    user.IsEnabled = false;
+                    await _userManager.UpdateAsync(user);
                     _logger.LogWarning("User account locked out.");
                     return RedirectToPage("./Lockout");
                 }

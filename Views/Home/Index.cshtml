@@ -8,28 +8,36 @@
     <table class="table table-dark mt-10">
         <thead>
             <tr>
+
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Mail</th>
-                <th scope="col">Registratoin Date</th>
+                <th scope="col">Registration Date</th>
                 <th scope="col">Last Seen</th>
-                <th scope="col">Status</th>
+                <th scope="col">Status (is enabled)</th>
             </tr>
         </thead>
         <tbody>
-
-            @foreach (var item in Model.Users)
+            @using (Html.BeginForm("Delete", "Home", FormMethod.Post))
             {
-            <tr>
-                <td> @item.Id</td>
-                <td>@item.Email</td>
-                <td>@item.Email</td>
-                <td></td>
-                <td>123</td>
-                <td>@item.EmailConfirmed</td>
-
-            </tr>
-             }
+                @foreach (var item in Model.Users)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Email</td>
+                        <td>@item.Email</td>
+                        <td>@item.RegistrationDateTime</td>
+                        <td>@item.LastLoginDateTime</td>
+                        @{item.IsEnabled = item.LockoutEnd.HasValue ? false : true; }
+                        <td>@item.IsEnabled</td>
+                        <td><input type="checkbox" name="IdsToChange" value="@item.Id" /></td>
+                    </tr>
+                }
+                          
+                <button type="submit" value="Delete" class="btn btn-danger">Delete</button>
+                            /*            */@/*Html.ActionLink("Delete", "Delete", new { model = Model }, new { @class = "btn btn-primaty"})*//*
+                */@/*Html.ActionLink("Block", "Block", new { model = Model }, new { @class = "btn btn-primary" })*/
+            }
         </tbody>
     </table>
 

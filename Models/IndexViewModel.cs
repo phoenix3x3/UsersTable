@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using _123.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace _123.Models
 {
     public class IndexViewModel
     {
-        public IEnumerable<IdentityUser> Users { get; set; }
-
+        public IEnumerable<TableUser> Users { get; set; }
+        public IEnumerable<string> IdsToChange { get; set; }
     }
 }

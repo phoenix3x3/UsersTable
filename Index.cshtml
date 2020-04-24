@@ -1,0 +1,48 @@
+﻿@page
+@model _123.IndexModel
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TableUserViewModel[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TableUserViewModel[0].RegistrationDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TableUserViewModel[0].LastLoginDateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TableUserViewModel[0].IsEnabled)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TableUserViewModel) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RegistrationDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastLoginDateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEnabled)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

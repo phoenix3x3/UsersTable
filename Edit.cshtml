@@ -1,0 +1,41 @@
+﻿@page
+@model _123.EditModel
+
+<h4>TableUserViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TableUserViewModel.Id" />
+            <div class="form-group">
+                <label asp-for="TableUserViewModel.Email" class="control-label"></label>
+                <input asp-for="TableUserViewModel.Email" class="form-control" />
+                <span asp-validation-for="TableUserViewModel.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TableUserViewModel.RegistrationDateTime" class="control-label"></label>
+                <input asp-for="TableUserViewModel.RegistrationDateTime" class="form-control" />
+                <span asp-validation-for="TableUserViewModel.RegistrationDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TableUserViewModel.LastLoginDateTime" class="control-label"></label>
+                <input asp-for="TableUserViewModel.LastLoginDateTime" class="form-control" />
+                <span asp-validation-for="TableUserViewModel.LastLoginDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TableUserViewModel.IsEnabled" class="control-label"></label>
+                <input asp-for="TableUserViewModel.IsEnabled" class="form-control" />
+                <span asp-validation-for="TableUserViewModel.IsEnabled" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
